@@ -315,9 +315,9 @@ DEFAULT_SETTINGS = {
         "image_url": "https://images.pexels.com/photos/29804128/pexels-photo-29804128.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1080",
     },
     "stats": [
-        {"value": "80+", "label": "ATLETI"},
-        {"value": "4", "label": "SQUADRE"},
-        {"value": "5", "label": "CATEGORIE"},
+        {"value": "6", "label": "SQUADRE"},
+        {"value": "5", "label": "SEDI DI GIOCO"},
+        {"value": "A2", "label": "SERIE NAZIONALE"},
         {"value": "1", "label": "COMMUNITY"},
     ],
     "gioca": {
@@ -346,32 +346,42 @@ DEFAULT_SETTINGS = {
         ],
     },
     "contacts": {
-        "email": "info@centrolombardia.it",
-        "phone": "+39 000 000 0000",
-        "whatsapp": "39000000000",
-        "address": "Lecco, Lombardia",
-        "gyms": [{"name": "Palestra (da definire)", "address": "Lecco, Lombardia"}],
+        "email": "lorialefloorball@gmail.com",
+        "phone": "+39 347 983 1209",
+        "whatsapp": "393479831209",
+        "address": "Lecco · Bergamo, Lombardia",
+        "gyms": [
+            {"name": "Istituto Caterina Cittadini — Calolziocorte", "address": "Ingresso da Via Volta, Calolziocorte (LC)"},
+            {"name": "Palacalcetto — Brembate di Sopra", "address": "Via Bruno Locatelli 36, Brembate di Sopra (BG)"},
+            {"name": "Palazzetto dello Sport — Olgiate Molgora", "address": "Via Aldo Moro 1, Olgiate Molgora (LC)"},
+            {"name": "Centro Polivalente — Monte Marenzo", "address": "Via Colombara, Monte Marenzo (LC)"},
+            {"name": "Palestra Scuole Medie — Cisano Bergamasco", "address": "Via S. Domenico Savio, Cisano Bergamasco (BG)"},
+        ],
     },
     "socials": {
-        "instagram": "https://instagram.com",
-        "tiktok": "https://tiktok.com",
-        "youtube": "https://youtube.com",
-        "facebook": "https://facebook.com",
+        "instagram": "https://www.instagram.com/asd_centrolombardiaunihockey",
+        "tiktok": "https://www.tiktok.com/@alessandro.bonanomi",
+        "youtube": "https://youtube.com/@centrolombardiaunihockey",
+        "facebook": "",
     },
-    "notification_email": "",
+    "notification_email": "lorialefloorball@gmail.com",
 }
 
 DEFAULT_TEAMS = [
-    {"id": str(uuid.uuid4()), "nome": "UNDER 11", "categoria": "Minifloorball", "descrizione": "Il primo passo nel floorball, tra gioco e movimento.", "allenatore": "Da definire", "allenamenti": "Da definire", "contatto": "", "image_url": "https://images.pexels.com/photos/29804128/pexels-photo-29804128.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800", "order": 0},
-    {"id": str(uuid.uuid4()), "nome": "UNDER 13", "categoria": "Giovanili", "descrizione": "Tecnica, velocità e spirito di squadra.", "allenatore": "Da definire", "allenamenti": "Da definire", "contatto": "", "image_url": "https://images.pexels.com/photos/6468601/pexels-photo-6468601.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800", "order": 1},
-    {"id": str(uuid.uuid4()), "nome": "SENIOR", "categoria": "Prima squadra", "descrizione": "L'anima competitiva del club.", "allenatore": "Da definire", "allenamenti": "Da definire", "contatto": "", "image_url": "https://images.unsplash.com/photo-1582556543861-2ffa150e771a?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200", "order": 2},
-    {"id": str(uuid.uuid4()), "nome": "OPEN / ADULTI", "categoria": "Amatoriale", "descrizione": "Floorball per tutti, a ogni età.", "allenatore": "Da definire", "allenamenti": "Da definire", "contatto": "", "image_url": "https://images.unsplash.com/photo-1623428454672-e9c6baec8c65?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200", "order": 3},
+    {"id": str(uuid.uuid4()), "nome": "SENIOR", "categoria": "Serie A2 · Prima squadra", "descrizione": "La prima squadra del club, impegnata nel campionato nazionale di Serie A2.", "allenatore": "Da definire", "allenamenti": "Da definire", "contatto": "", "image_url": "https://images.pexels.com/photos/35280849/pexels-photo-35280849.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800", "order": 0},
+    {"id": str(uuid.uuid4()), "nome": "UNDER 19", "categoria": "Giovanile", "descrizione": "Il salto verso il senior: intensità, tecnica e responsabilità. Anche 3v3 femminile.", "allenatore": "Da definire", "allenamenti": "Da definire", "contatto": "", "image_url": "https://images.pexels.com/photos/6468601/pexels-photo-6468601.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800", "order": 1},
+    {"id": str(uuid.uuid4()), "nome": "UNDER 16", "categoria": "Giovanile", "descrizione": "Crescita agonistica e spirito di squadra tra le categorie giovanili.", "allenatore": "Da definire", "allenamenti": "Da definire", "contatto": "", "image_url": "https://images.unsplash.com/photo-1582556543861-2ffa150e771a?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200", "order": 2},
+    {"id": str(uuid.uuid4()), "nome": "UNDER 13", "categoria": "Giovanile · 5v5 & 3v3", "descrizione": "Campionato Lombardia (5v5) e Nord Italia (3v3): il cuore del vivaio.", "allenatore": "Da definire", "allenamenti": "Da definire", "contatto": "", "image_url": "https://images.pexels.com/photos/29804128/pexels-photo-29804128.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800", "order": 3},
+    {"id": str(uuid.uuid4()), "nome": "UNDER 11", "categoria": "Minifloorball · 3v3", "descrizione": "Il primo approccio al gioco: divertimento, movimento e fondamentali.", "allenatore": "Da definire", "allenamenti": "Da definire", "contatto": "", "image_url": "https://images.unsplash.com/photo-1655555044588-912861846347?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200", "order": 4},
+    {"id": str(uuid.uuid4()), "nome": "FEMMINILE", "categoria": "U19 Femminile · 3v3", "descrizione": "Il floorball femminile del club, dalla giovanile all'agonismo.", "allenatore": "Da definire", "allenamenti": "Da definire", "contatto": "", "image_url": "https://images.unsplash.com/photo-1623428454672-e9c6baec8c65?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200", "order": 5},
 ]
 
 DEFAULT_COURSES = [
-    {"id": str(uuid.uuid4()), "categoria": "MINIFLOORBALL", "eta": "6–10 anni", "giorni": "Da definire", "orari": "Da definire", "luogo": "Lecco", "order": 0},
-    {"id": str(uuid.uuid4()), "categoria": "GIOVANILI", "eta": "11–14 anni", "giorni": "Da definire", "orari": "Da definire", "luogo": "Lecco", "order": 1},
-    {"id": str(uuid.uuid4()), "categoria": "SENIOR", "eta": "15+ anni", "giorni": "Da definire", "orari": "Da definire", "luogo": "Lecco", "order": 2},
+    {"id": str(uuid.uuid4()), "categoria": "CALOLZIOCORTE", "eta": "Avviamento", "giorni": "Lunedì", "orari": "17.00–18.30", "luogo": "Istituto Caterina Cittadini · ingresso da Via Volta", "order": 0},
+    {"id": str(uuid.uuid4()), "categoria": "BREMBATE DI SOPRA", "eta": "Tutti i livelli", "giorni": "Martedì", "orari": "17.30–19.00", "luogo": "Palacalcetto · Via Bruno Locatelli 36", "order": 1},
+    {"id": str(uuid.uuid4()), "categoria": "OLGIATE MOLGORA", "eta": "Tutti i livelli", "giorni": "Mercoledì", "orari": "17.00–18.30", "luogo": "Palazzetto dello Sport · Via Aldo Moro 1", "order": 2},
+    {"id": str(uuid.uuid4()), "categoria": "MONTE MARENZO", "eta": "Avviamento · Avanzato", "giorni": "Giovedì", "orari": "17.00–18.30 / 18.30–20.00", "luogo": "Centro Polivalente · Via Colombara", "order": 3},
+    {"id": str(uuid.uuid4()), "categoria": "CISANO BERGAMASCO", "eta": "Avviamento · Avanzato", "giorni": "Venerdì", "orari": "17.00–18.30 / 18.30–20.00", "luogo": "Palestra Scuole Medie · Via S. Domenico Savio", "order": 4},
 ]
 
 # --------------------------------------------------------------------------- #

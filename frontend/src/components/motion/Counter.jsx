@@ -1,10 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-import { useInView } from "framer-motion";
+import { useEffect, useState } from "react";
 
-// Animated counter. Parses leading number, keeps suffix (e.g. "80+").
-export const Counter = ({ value = "0", duration = 1800, className = "" }) => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-20%" });
+// Animated counter driven by an external `start` flag (one trigger for the whole row).
+// Parses a leading number and keeps any suffix (e.g. "80+"); non-numeric values (e.g. "A2") render as-is.
+export const Counter = ({ value = "0", start = false, duration = 1800, className = "" }) => {
   const [display, setDisplay] = useState(0);
 
   const match = String(value).match(/^(\d+)(.*)$/);
@@ -13,22 +11,18 @@ export const Counter = ({ value = "0", duration = 1800, className = "" }) => {
   const isNumeric = !!match;
 
   useEffect(() => {
-    if (!inView || !isNumeric) return;
+    if (!start || !isNumeric) return;
     let raf;
-    const start = performance.now();
+    const t0 = performance.now();
     const tick = (now) => {
-      const p = Math.min((now - start) / duration, 1);
+      const p = Math.min((now - t0) / duration, 1);
       const eased = 1 - Math.pow(1 - p, 3);
       setDisplay(Math.round(eased * target));
       if (p < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [inView, target, duration, isNumeric]);
+  }, [start, target, duration, isNumeric]);
 
-  return (
-    <span ref={ref} className={className}>
-      {isNumeric ? `${display}${suffix}` : value}
-    </span>
-  );
+  return <span className={className}>{isNumeric ? `${display}${suffix}` : value}</span>;
 };

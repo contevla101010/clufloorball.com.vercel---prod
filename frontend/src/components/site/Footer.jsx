@@ -67,6 +67,13 @@ export const Footer = ({ settings }) => {
                 <Instagram size={20} />
               </a>
             )}
+            {s.tiktok && (
+              <a href={s.tiktok} target="_blank" rel="noreferrer" data-cursor aria-label="TikTok" data-testid="social-tiktok" className="text-brand-off/60 hover:text-brand-electric">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+                  <path d="M16.5 3c.3 2.1 1.5 3.5 3.5 3.7v2.3c-1.2.1-2.4-.2-3.5-.8v5.9c0 3.2-2.4 5.6-5.5 5.6A5.4 5.4 0 0 1 5.6 14c.1-2.7 2.2-4.9 4.9-5v2.5c-.3.1-.6.2-.9.3a2.7 2.7 0 0 0-1.5 3.1 2.7 2.7 0 0 0 5.3-.7V3h3.1Z" />
+                </svg>
+              </a>
+            )}
             {s.youtube && (
               <a href={s.youtube} target="_blank" rel="noreferrer" data-cursor aria-label="YouTube" data-testid="social-youtube" className="text-brand-off/60 hover:text-brand-electric">
                 <Youtube size={20} />
