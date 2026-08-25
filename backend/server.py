@@ -315,7 +315,7 @@ DEFAULT_SETTINGS = {
         "image_url": "https://images.pexels.com/photos/29804128/pexels-photo-29804128.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1080",
     },
     "stats": [
-        {"value": "6", "label": "SQUADRE"},
+        {"value": "5", "label": "SQUADRE"},
         {"value": "5", "label": "SEDI DI GIOCO"},
         {"value": "A2", "label": "SERIE NAZIONALE"},
         {"value": "1", "label": "COMMUNITY"},
@@ -373,7 +373,6 @@ DEFAULT_TEAMS = [
     {"id": str(uuid.uuid4()), "nome": "UNDER 16", "categoria": "Giovanile", "descrizione": "Crescita agonistica e spirito di squadra tra le categorie giovanili.", "allenatore": "Da definire", "allenamenti": "Da definire", "contatto": "", "image_url": "https://images.unsplash.com/photo-1582556543861-2ffa150e771a?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200", "order": 2},
     {"id": str(uuid.uuid4()), "nome": "UNDER 13", "categoria": "Giovanile · 5v5 & 3v3", "descrizione": "Campionato Lombardia (5v5) e Nord Italia (3v3): il cuore del vivaio.", "allenatore": "Da definire", "allenamenti": "Da definire", "contatto": "", "image_url": "https://images.pexels.com/photos/29804128/pexels-photo-29804128.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800", "order": 3},
     {"id": str(uuid.uuid4()), "nome": "UNDER 11", "categoria": "Minifloorball · 3v3", "descrizione": "Il primo approccio al gioco: divertimento, movimento e fondamentali.", "allenatore": "Da definire", "allenamenti": "Da definire", "contatto": "", "image_url": "https://images.unsplash.com/photo-1655555044588-912861846347?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200", "order": 4},
-    {"id": str(uuid.uuid4()), "nome": "FEMMINILE", "categoria": "U19 Femminile · 3v3", "descrizione": "Il floorball femminile del club, dalla giovanile all'agonismo.", "allenatore": "Da definire", "allenamenti": "Da definire", "contatto": "", "image_url": "https://images.unsplash.com/photo-1623428454672-e9c6baec8c65?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200", "order": 5},
 ]
 
 DEFAULT_COURSES = [

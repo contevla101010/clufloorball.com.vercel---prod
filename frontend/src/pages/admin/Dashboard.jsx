@@ -136,18 +136,26 @@ const SettingsEditor = () => {
         <Field label="Testo" value={s.sponsor.body} onChange={f("sponsor.body")} area />
       </Group>
 
-      <Group title="Social wall (immagini)">
+      <Group title="Social wall / Reel Instagram">
+        <p className="md:col-span-2 -mt-2 font-manrope text-xs text-brand-off/50">
+          Incolla l'URL di un reel/post Instagram (es. https://www.instagram.com/reel/XXXX/) per mostrarlo embeddato. Se lasci vuoto l'URL reel, viene usata l'immagine come tile cliccabile.
+        </p>
         {(s.social?.items || []).map((it, i) => (
-          <div key={i} className="grid grid-cols-[1fr_1fr_auto] items-end gap-2 md:col-span-2">
-            <ImageUpload label="Immagine" value={it.image_url} onChange={f(`social.items.${i}.image_url`)} />
-            <Field label="Link (opzionale)" value={it.link} onChange={f(`social.items.${i}.link`)} />
-            <button className={btnGhost} onClick={() => setS((p) => ({ ...p, social: { ...p.social, items: p.social.items.filter((_, x) => x !== i) } }))}>
-              <Trash2 size={14} />
-            </button>
+          <div key={i} className="border border-white/10 p-4 md:col-span-2">
+            <div className="grid gap-3 md:grid-cols-[1fr_auto] md:items-start">
+              <Field label={`Reel ${i + 1} — URL Instagram`} value={it.ig_url} onChange={f(`social.items.${i}.ig_url`)} />
+              <button className={`${btnGhost} md:mt-6`} onClick={() => setS((p) => ({ ...p, social: { ...p.social, items: p.social.items.filter((_, x) => x !== i) } }))}>
+                <Trash2 size={14} /> Rimuovi
+              </button>
+            </div>
+            <div className="mt-3 grid gap-3 md:grid-cols-2">
+              <ImageUpload label="Immagine cover (fallback)" value={it.image_url} onChange={f(`social.items.${i}.image_url`)} />
+              <Field label="Link (se non usi embed)" value={it.link} onChange={f(`social.items.${i}.link`)} />
+            </div>
           </div>
         ))}
-        <button className={btnGhost} onClick={() => setS((p) => ({ ...p, social: { ...p.social, items: [...(p.social?.items || []), { image_url: "", link: "" }] } }))}>
-          <Plus size={14} /> Aggiungi immagine
+        <button className={btnGhost} onClick={() => setS((p) => ({ ...p, social: { ...p.social, items: [...(p.social?.items || []), { ig_url: "", image_url: "", link: "" }] } }))}>
+          <Plus size={14} /> Aggiungi reel / immagine
         </button>
       </Group>
 

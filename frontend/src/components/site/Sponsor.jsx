@@ -9,8 +9,8 @@ import { scrollToId } from "@/lib/scroll";
 
 const TIERS = [
   { name: "Bronze", tag: "Entry partnership", benefits: ["Logo sul sito", "Presenza partner", "Menzioni digitali", "Visibilità base"] },
-  { name: "Silver", tag: "Growing partner", benefits: ["Tutto Bronze", "Maggiore visibilità", "Presenza eventi", "Contenuti social"] },
-  { name: "Gold", tag: "Premium partner", benefits: ["Tutto Silver", "Posizione prioritaria", "Contenuti dedicati", "Opportunità branding"], featured: true },
+  { name: "Silver", tag: "Growing partner", discount: "30%", benefits: ["Tutto Bronze", "Maggiore visibilità", "Presenza eventi", "Contenuti social"] },
+  { name: "Gold", tag: "Premium partner", discount: "40%", benefits: ["Tutto Silver", "Posizione prioritaria", "Contenuti dedicati", "Opportunità branding"], featured: true },
 ];
 
 export const Sponsor = ({ settings }) => {
@@ -55,6 +55,12 @@ export const Sponsor = ({ settings }) => {
               )}
               <h3 className="font-anton text-4xl uppercase text-brand-off">{t.name}</h3>
               <p className="mt-1 font-manrope text-xs uppercase tracking-widest text-brand-electric">{t.tag}</p>
+              {t.discount && (
+                <div className="mt-4 inline-flex w-fit items-baseline gap-1.5 bg-brand-orange px-3 py-1.5 text-brand-ink" data-testid={`sponsor-discount-${t.name.toLowerCase()}`}>
+                  <span className="font-anton text-2xl leading-none">-{t.discount}</span>
+                  <span className="font-manrope text-[10px] font-bold uppercase tracking-widest">di sconto</span>
+                </div>
+              )}
               <ul className="mt-6 flex-1 space-y-3">
                 {t.benefits.map((b) => (
                   <li key={b} className="flex items-center gap-3 font-manrope text-sm text-brand-off/75">
@@ -124,7 +130,6 @@ export const Sponsor = ({ settings }) => {
                 <CTA onClick={() => choose("Diamond")} className="w-full" data-testid="sponsor-cta-diamond">
                   Parliamone
                 </CTA>
-                <p className="mt-3 font-manrope text-xs text-brand-off/50">1 partnership disponibile</p>
               </div>
             </div>
           </div>
