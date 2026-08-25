@@ -41,7 +41,11 @@ export const Header = ({ settings }) => {
         <div className="flex items-center justify-between px-5 py-4 md:px-10">
           <button onClick={() => go("hero")} data-testid="logo-home" className="flex items-center gap-3">
             {settings.logo_url ? (
-              <img src={settings.logo_url} alt="Centro Lombardia Unihockey" className="h-9 w-auto md:h-10" />
+              <img
+                src={settings.logo_url}
+                alt="Centro Lombardia Unihockey"
+                className="h-11 w-11 rounded-full object-cover md:h-12 md:w-12"
+              />
             ) : (
               <span className="flex items-center gap-2 font-anton text-lg uppercase tracking-wide text-brand-off md:text-xl">
                 <span className="grid h-8 w-8 place-items-center bg-brand-electric text-brand-ink">C</span>

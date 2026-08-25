@@ -9,7 +9,7 @@ export const Marquee = ({ items = [], reverse = false, className = "", itemClass
         {doubled.map((item, i) => (
           <span key={i} className={`flex items-center ${itemClassName}`}>
             {item}
-            <span className="mx-6 text-brand-electric md:mx-10">✦</span>
+            <span className="mx-6 text-brand-orange md:mx-10">✦</span>
           </span>
         ))}
       </div>

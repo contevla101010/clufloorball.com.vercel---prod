@@ -5,6 +5,7 @@ import { LogOut, Plus, Trash2, Save } from "lucide-react";
 import api, { formatApiError } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { ImageUpload } from "@/components/site/ImageUpload";
 
 const inputCls =
   "w-full rounded-none border border-white/10 bg-brand-ink px-3 py-2 font-manrope text-sm text-brand-off focus:border-brand-electric focus:outline-none";
@@ -68,7 +69,7 @@ const SettingsEditor = () => {
   return (
     <div className="space-y-6 pb-24">
       <Group title="Generale">
-        <Field label="Logo URL" value={s.logo_url} onChange={f("logo_url")} />
+        <ImageUpload label="Logo" value={s.logo_url} onChange={f("logo_url")} />
         <Field label="Email notifiche (richieste)" value={s.notification_email} onChange={f("notification_email")} />
       </Group>
 
@@ -80,7 +81,7 @@ const SettingsEditor = () => {
         <Field label="Microcopy" value={s.hero.microcopy} onChange={f("hero.microcopy")} />
         <Field label="CTA primaria" value={s.hero.cta_primary} onChange={f("hero.cta_primary")} />
         <Field label="CTA secondaria" value={s.hero.cta_secondary} onChange={f("hero.cta_secondary")} />
-        <Field label="Immagine URL" value={s.hero.image_url} onChange={f("hero.image_url")} />
+        <ImageUpload label="Immagine hero" value={s.hero.image_url} onChange={f("hero.image_url")} />
         <Field label="Video URL (opzionale)" value={s.hero.video_url} onChange={f("hero.video_url")} />
       </Group>
 
@@ -113,7 +114,7 @@ const SettingsEditor = () => {
         <Field label="Riga 2" value={s.about.line2} onChange={f("about.line2")} />
         <Field label="Riga 3" value={s.about.line3} onChange={f("about.line3")} />
         <Field label="Testo" value={s.about.body} onChange={f("about.body")} area />
-        <Field label="Immagine URL" value={s.about.image_url} onChange={f("about.image_url")} />
+        <ImageUpload label="Immagine chi siamo" value={s.about.image_url} onChange={f("about.image_url")} />
       </Group>
 
       <Group title="Gioca">
@@ -126,7 +127,7 @@ const SettingsEditor = () => {
         <Field label="Riga 1" value={s.emotional.line1} onChange={f("emotional.line1")} />
         <Field label="Riga 2" value={s.emotional.line2} onChange={f("emotional.line2")} />
         <Field label="Riga 3" value={s.emotional.line3} onChange={f("emotional.line3")} />
-        <Field label="Immagine URL" value={s.emotional.image_url} onChange={f("emotional.image_url")} />
+        <ImageUpload label="Immagine emozionale" value={s.emotional.image_url} onChange={f("emotional.image_url")} />
       </Group>
 
       <Group title="Sponsor">
@@ -138,7 +139,7 @@ const SettingsEditor = () => {
       <Group title="Social wall (immagini)">
         {(s.social?.items || []).map((it, i) => (
           <div key={i} className="grid grid-cols-[1fr_1fr_auto] items-end gap-2 md:col-span-2">
-            <Field label="Immagine URL" value={it.image_url} onChange={f(`social.items.${i}.image_url`)} />
+            <ImageUpload label="Immagine" value={it.image_url} onChange={f(`social.items.${i}.image_url`)} />
             <Field label="Link (opzionale)" value={it.link} onChange={f(`social.items.${i}.link`)} />
             <button className={btnGhost} onClick={() => setS((p) => ({ ...p, social: { ...p.social, items: p.social.items.filter((_, x) => x !== i) } }))}>
               <Trash2 size={14} />
@@ -224,9 +225,13 @@ const CrudManager = ({ endpoint, fields, blank, title }) => {
       {items.map((item, idx) => (
         <div key={item.id} className="border border-white/10 bg-brand-ink2 p-5" data-testid={`${endpoint}-item`}>
           <div className="grid gap-4 md:grid-cols-2">
-            {fields.map((fl) => (
-              <Field key={fl.key} label={fl.label} value={item[fl.key]} area={fl.area} onChange={(v) => upd(idx, fl.key, v)} />
-            ))}
+            {fields.map((fl) =>
+              fl.type === "image" ? (
+                <ImageUpload key={fl.key} label={fl.label} value={item[fl.key]} onChange={(v) => upd(idx, fl.key, v)} />
+              ) : (
+                <Field key={fl.key} label={fl.label} value={item[fl.key]} area={fl.area} onChange={(v) => upd(idx, fl.key, v)} />
+              )
+            )}
           </div>
           <div className="mt-4 flex gap-3">
             <button className={btn} onClick={() => save(item)}><Save size={14} /> Salva</button>
@@ -320,7 +325,7 @@ export default function Dashboard() {
                 { key: "descrizione", label: "Descrizione", area: true },
                 { key: "allenatore", label: "Allenatore" },
                 { key: "allenamenti", label: "Allenamenti" },
-                { key: "image_url", label: "Immagine URL" },
+                { key: "image_url", label: "Foto squadra", type: "image" },
               ]}
             />
           </TabsContent>
@@ -345,7 +350,7 @@ export default function Dashboard() {
               blank={{ nome: "NUOVO PARTNER", logo_url: "", link: "" }}
               fields={[
                 { key: "nome", label: "Nome" },
-                { key: "logo_url", label: "Logo URL" },
+                { key: "logo_url", label: "Logo", type: "image" },
                 { key: "link", label: "Link" },
               ]}
             />

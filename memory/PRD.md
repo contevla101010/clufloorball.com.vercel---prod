@@ -29,6 +29,10 @@ Build the new official website for ASD Centro Lombardia Unihockey — a young, a
 - Email notifications: Resend integrated; recipient is EMPTY by default → set in CMS → Contenuti → "Email notifiche" to enable sending. Until set, requests are only saved to DB (no email). NOT mocked — real send once recipient is configured.
 - Placeholder stock photos & example numbers/teams/courses are placeholders to be replaced by the admin. Logo not yet uploaded (temporary purple palette + "C" mark).
 
+## Implemented (2026-08-25)
+- Official logo integrated (header circular crest + footer). Real brand colors applied: purple primary, ORANGE (#F5A623) secondary used as the "ball trail" accent per brief.
+- Object storage image upload in CMS: protected POST /api/admin/upload (image-only, 8MB max) + public GET /api/files/{path}. ImageUpload component (thumbnail + upload + URL fallback) wired into all image fields (logo, hero, about, emotional, social wall, team photo, sponsor logo). Verified end-to-end via curl (upload 200, serve 200, unauth 401).
+
 ## Backlog / next (P1/P2)
 - P1: Replace placeholders with real logo (extract real brand colors), real photos/video, real numbers/teams/courses/gyms/WhatsApp/socials.
 - P2: Instagram/TikTok live feed for social wall; image upload in CMS (object storage) instead of URLs; multi-image team galleries; cookie/privacy policy pages.

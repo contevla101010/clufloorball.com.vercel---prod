@@ -15,6 +15,9 @@ export const Footer = ({ settings }) => {
     <footer id="contatti" className="relative border-t border-white/10 bg-brand-ink px-5 py-16 md:px-12 md:py-24">
       <div className="grid gap-12 md:grid-cols-12">
         <div className="md:col-span-5">
+          {settings.logo_url && (
+            <img src={settings.logo_url} alt="Centro Lombardia Unihockey" className="mb-5 h-16 w-16 rounded-full object-cover" />
+          )}
           <span className="font-anton text-3xl uppercase text-brand-off">Centro Lombardia</span>
           <p className="mt-1 font-manrope text-xs uppercase tracking-[0.3em] text-brand-electric">Unihockey — Floorball</p>
           <p className="mt-6 max-w-xs font-manrope text-sm text-brand-off/60">

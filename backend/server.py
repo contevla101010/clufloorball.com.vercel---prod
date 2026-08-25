@@ -5,6 +5,7 @@ import os
 import re
 import logging
 import uuid
+import asyncio
 import ipaddress
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -16,7 +17,8 @@ from urllib.parse import urlparse
 import bcrypt
 import jwt
 import httpx
-from fastapi import FastAPI, APIRouter, HTTPException, Depends, Request, Response
+import requests
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, Request, Response, UploadFile, File
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 from bson import ObjectId
@@ -185,6 +187,50 @@ async def notification_recipient() -> Optional[str]:
     return email or None
 
 # --------------------------------------------------------------------------- #
+#  OBJECT STORAGE (Emergent-managed)
+# --------------------------------------------------------------------------- #
+
+STORAGE_BASE = (os.environ.get("INTEGRATION_PROXY_URL") or "").strip() or "https://integrations.emergentagent.com"
+STORAGE_URL = STORAGE_BASE.rstrip("/") + "/objstore/api/v1/storage"
+EMERGENT_KEY = os.environ.get("EMERGENT_LLM_KEY")
+APP_NAME = "clu"
+_storage_key = None
+
+MIME_TYPES = {"jpg": "image/jpeg", "jpeg": "image/jpeg", "png": "image/png",
+              "gif": "image/gif", "webp": "image/webp", "svg": "image/svg+xml"}
+
+def init_storage(force: bool = False):
+    global _storage_key
+    if _storage_key and not force:
+        return _storage_key
+    resp = requests.post(f"{STORAGE_URL}/init", json={"emergent_key": EMERGENT_KEY}, timeout=30)
+    resp.raise_for_status()
+    _storage_key = resp.json()["storage_key"]
+    return _storage_key
+
+def put_object(path: str, data: bytes, content_type: str) -> dict:
+    key = init_storage()
+    resp = requests.put(f"{STORAGE_URL}/objects/{path}",
+                        headers={"X-Storage-Key": key, "Content-Type": content_type},
+                        data=data, timeout=120)
+    if resp.status_code == 404:
+        key = init_storage(force=True)
+        resp = requests.put(f"{STORAGE_URL}/objects/{path}",
+                            headers={"X-Storage-Key": key, "Content-Type": content_type},
+                            data=data, timeout=120)
+    resp.raise_for_status()
+    return resp.json()
+
+def get_object(path: str):
+    key = init_storage()
+    resp = requests.get(f"{STORAGE_URL}/objects/{path}", headers={"X-Storage-Key": key}, timeout=60)
+    if resp.status_code == 404:
+        key = init_storage(force=True)
+        resp = requests.get(f"{STORAGE_URL}/objects/{path}", headers={"X-Storage-Key": key}, timeout=60)
+    resp.raise_for_status()
+    return resp.content, resp.headers.get("Content-Type", "application/octet-stream")
+
+# --------------------------------------------------------------------------- #
 #  MODELS
 # --------------------------------------------------------------------------- #
 
@@ -241,7 +287,7 @@ class Sponsor(BaseModel):
 
 DEFAULT_SETTINGS = {
     "key": "main",
-    "logo_url": "",
+    "logo_url": "https://customer-assets-gfyr7b9c.emergentagent.net/job_play-fast-together/artifacts/683xcuag_image.png",
     "hero": {
         "line1": "IL FLOORBALL",
         "line2": "HA UNA NUOVA",
@@ -429,6 +475,40 @@ async def admin_update_settings(data: dict, user=Depends(get_current_user)):
     await db.site_settings.update_one({"key": "main"}, {"$set": data}, upsert=True)
     return await db.site_settings.find_one({"key": "main"}, {"_id": 0})
 
+@api.post("/admin/upload")
+async def admin_upload(file: UploadFile = File(...), user=Depends(get_current_user)):
+    ext = (file.filename.rsplit(".", 1)[-1].lower() if "." in (file.filename or "") else "png")
+    content_type = file.content_type or MIME_TYPES.get(ext, "application/octet-stream")
+    if not content_type.startswith("image/"):
+        raise HTTPException(status_code=400, detail="Sono ammesse solo immagini")
+    data = await file.read()
+    if len(data) > 8 * 1024 * 1024:
+        raise HTTPException(status_code=400, detail="Immagine troppo grande (max 8MB)")
+    path = f"{APP_NAME}/uploads/{uuid.uuid4()}.{ext}"
+    try:
+        result = await asyncio.to_thread(put_object, path, data, content_type)
+    except Exception as e:
+        logger.error(f"Upload failed: {e}")
+        raise HTTPException(status_code=502, detail="Upload non riuscito")
+    stored_path = result.get("path", path)
+    await db.files.insert_one({
+        "id": str(uuid.uuid4()), "storage_path": stored_path,
+        "original_filename": file.filename, "content_type": content_type,
+        "size": result.get("size", len(data)), "is_deleted": False,
+        "created_at": datetime.now(timezone.utc).isoformat(),
+    })
+    return {"url": f"/api/files/{stored_path}", "path": stored_path}
+
+@api.get("/files/{path:path}")
+async def serve_file(path: str):
+    record = await db.files.find_one({"storage_path": path, "is_deleted": False}, {"_id": 0})
+    try:
+        data, content_type = await asyncio.to_thread(get_object, path)
+    except Exception:
+        raise HTTPException(status_code=404, detail="File non trovato")
+    ct = (record or {}).get("content_type") or content_type
+    return Response(content=data, media_type=ct, headers={"Cache-Control": "public, max-age=31536000"})
+
 def _crud(collection: str, model):
     r = APIRouter()
 
@@ -492,10 +572,19 @@ async def startup():
 
     if await db.site_settings.find_one({"key": "main"}) is None:
         await db.site_settings.insert_one(dict(DEFAULT_SETTINGS))
+    else:
+        existing_settings = await db.site_settings.find_one({"key": "main"})
+        if not existing_settings.get("logo_url"):
+            await db.site_settings.update_one({"key": "main"}, {"$set": {"logo_url": DEFAULT_SETTINGS["logo_url"]}})
     if await db.teams.count_documents({}) == 0:
         await db.teams.insert_many([dict(t) for t in DEFAULT_TEAMS])
     if await db.courses.count_documents({}) == 0:
         await db.courses.insert_many([dict(c) for c in DEFAULT_COURSES])
+    try:
+        await asyncio.to_thread(init_storage)
+        logger.info("Object storage initialized")
+    except Exception as e:
+        logger.error(f"Storage init failed: {e}")
     logger.info("Startup complete — admin seeded, content ready")
 
 app.include_router(api)

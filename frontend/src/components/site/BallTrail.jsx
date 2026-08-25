@@ -12,11 +12,11 @@ export const BallTrail = () => {
         viewBox="0 0 100 100"
         preserveAspectRatio="none"
         fill="none"
-        style={{ filter: "drop-shadow(0 0 6px rgba(124,58,237,0.9))" }}
+        style={{ filter: "drop-shadow(0 0 6px rgba(245,166,35,0.9))" }}
       >
         <motion.path
           d="M 96 -2 C 70 12, 88 26, 60 34 C 30 43, 72 54, 40 63 C 8 72, 60 82, 30 92 C 12 98, 20 104, 8 110"
-          stroke="#7C3AED"
+          stroke="#F5A623"
           strokeWidth="0.35"
           strokeLinecap="round"
           style={{ pathLength }}
