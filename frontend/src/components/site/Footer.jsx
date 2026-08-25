@@ -55,11 +55,6 @@ export const Footer = ({ settings }) => {
                 <a href={`tel:${c.phone}`} className="link-underline" data-testid="footer-phone">{c.phone}</a>
               </li>
             )}
-            {(c.gyms || []).map((g, i) => (
-              <li key={i} className="text-brand-off/60">
-                {g.name}{g.address ? ` — ${g.address}` : ""}
-              </li>
-            ))}
           </ul>
           <div className="mt-6 flex gap-4">
             {s.instagram && (
