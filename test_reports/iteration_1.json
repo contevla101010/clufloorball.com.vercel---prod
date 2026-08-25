@@ -1,0 +1,39 @@
+{
+  "summary": "Frontend-only verification of ice-hockey image removal bug fix. All requested assertions PASSED. No image on the homepage has a src containing Pexels ids '6468601' or '35280849'. The 'Off the field' social wall (data-testid='social-wall') renders 4 Unsplash floorball images that all load successfully (naturalWidth=800). The Squadre section (id='squadre') shows exactly 5 unique team cards (SENIOR, UNDER 19, UNDER 16, UNDER 13, UNDER 11), no FEMMINILE. Hero headline 'IL FLOORBALL / HA UNA NUOVA / CASA.' visible; hero background image loads (photo-1575367724620, naturalWidth=1600).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "verification_details": {
+    "total_images_on_page": 19,
+    "ice_hockey_images_found": 0,
+    "social_wall_images": [
+      "photo-1575367724620-6d5d5e3cdcfd (nw=800)",
+      "photo-1783973566204-10c2519d78cb (nw=800)",
+      "photo-1701272873248-ee041b51b02b (nw=800)",
+      "photo-1655555044588-912861846347 (nw=800)"
+    ],
+    "squadre_teams_unique": ["SENIOR", "UNDER 19", "UNDER 16", "UNDER 13", "UNDER 11"],
+    "femminile_present": false,
+    "hero_bg_image": "photo-1575367724620-6d5d5e3cdcfd (nw=1600) OK",
+    "hero_headline_visible": true
+  },
+  "test_report_links": [],
+  "action_items": [
+    "(Minor, not related to bug fix) Squadre section uses id='squadre' but the review request expected data-testid='squadre' on the section wrapper. The team cards do use data-testid='team-card-<id>' correctly. Consider adding data-testid='squadre' to the section for consistency with SocialWall.",
+    "(Minor) Team cards appear to be rendered twice in the DOM (10 nodes for 5 unique teams). Likely two responsive views or a duplicated marquee/track element. Verify only one set is visible per breakpoint; otherwise deduplicate to avoid double network fetches (each team image was loaded twice).",
+    "(Unrelated console warning) React hydration warning: <span> cannot be a child of <option> in components/site/TrialForm.jsx line 70 (courses map). Wrap the dynamic label without a <span> wrapper inside <option>.",
+    "(Unrelated) Two 401 responses observed during page load (likely optional admin/session probe). Confirm public homepage doesn't call an auth-required endpoint."
+  ],
+  "critical_code_review_comments": [
+    "Bug fix verified: DB content served via GET /api/content no longer contains ice-hockey Pexels URLs. Rendered DOM confirms correct floorball imagery site-wide."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (skipped)", "frontend": "100% for requested assertions"},
+  "seed_data_creation": "",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Bug fix for ice-hockey images fully validated on live URL. If further requests come in re: Squadre, note that section uses id='squadre' (not data-testid) and cards duplicate in DOM (5 unique x2 = 10 nodes). Also a pre-existing React hydration warning exists in TrialForm.jsx (<span> inside <option>) — unrelated to this bug."
+}
