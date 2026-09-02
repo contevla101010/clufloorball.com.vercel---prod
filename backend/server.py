@@ -315,7 +315,7 @@ DEFAULT_SETTINGS = {
         "image_url": "https://images.pexels.com/photos/29804128/pexels-photo-29804128.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1080",
     },
     "stats": [
-        {"value": "5", "label": "SQUADRE"},
+        {"value": "4", "label": "SQUADRE"},
         {"value": "5", "label": "SEDI DI GIOCO"},
         {"value": "A2", "label": "SERIE NAZIONALE"},
         {"value": "1", "label": "COMMUNITY"},
@@ -369,10 +369,9 @@ DEFAULT_SETTINGS = {
 
 DEFAULT_TEAMS = [
     {"id": str(uuid.uuid4()), "nome": "SENIOR", "categoria": "Serie A2 · Prima squadra", "descrizione": "La prima squadra del club, impegnata nel campionato nazionale di Serie A2.", "allenatore": "Da definire", "allenamenti": "Da definire", "contatto": "", "image_url": "https://images.unsplash.com/photo-1783973566204-10c2519d78cb?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200", "order": 0},
-    {"id": str(uuid.uuid4()), "nome": "UNDER 19", "categoria": "Giovanile", "descrizione": "Il salto verso il senior: intensità, tecnica e responsabilità.", "allenatore": "Da definire", "allenamenti": "Da definire", "contatto": "", "image_url": "https://images.unsplash.com/photo-1727358832709-612c3888b464?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200", "order": 1},
-    {"id": str(uuid.uuid4()), "nome": "UNDER 16", "categoria": "Giovanile", "descrizione": "Crescita agonistica e spirito di squadra tra le categorie giovanili.", "allenatore": "Da definire", "allenamenti": "Da definire", "contatto": "", "image_url": "https://images.unsplash.com/photo-1582556543861-2ffa150e771a?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200", "order": 2},
-    {"id": str(uuid.uuid4()), "nome": "UNDER 13", "categoria": "Giovanile · 5v5 & 3v3", "descrizione": "Campionato Lombardia (5v5) e Nord Italia (3v3): il cuore del vivaio.", "allenatore": "Da definire", "allenamenti": "Da definire", "contatto": "", "image_url": "https://images.pexels.com/photos/29804128/pexels-photo-29804128.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800", "order": 3},
-    {"id": str(uuid.uuid4()), "nome": "UNDER 11", "categoria": "Minifloorball · 3v3", "descrizione": "Il primo approccio al gioco: divertimento, movimento e fondamentali.", "allenatore": "Da definire", "allenamenti": "Da definire", "contatto": "", "image_url": "https://images.unsplash.com/photo-1655555044588-912861846347?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200", "order": 4},
+    {"id": str(uuid.uuid4()), "nome": "UNDER 16", "categoria": "Giovanile · 3v3", "descrizione": "Crescita agonistica e spirito di squadra tra le categorie giovanili.", "allenatore": "Da definire", "allenamenti": "Da definire", "contatto": "", "image_url": "https://images.unsplash.com/photo-1582556543861-2ffa150e771a?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200", "order": 1},
+    {"id": str(uuid.uuid4()), "nome": "UNDER 13", "categoria": "Giovanile · 5v5 & 3v3", "descrizione": "Campionato Lombardia (5v5) e Nord Italia (3v3): il cuore del vivaio.", "allenatore": "Da definire", "allenamenti": "Da definire", "contatto": "", "image_url": "https://images.pexels.com/photos/29804128/pexels-photo-29804128.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800", "order": 2},
+    {"id": str(uuid.uuid4()), "nome": "UNDER 11", "categoria": "Minifloorball · 3v3 & 5v5", "descrizione": "Il primo approccio al gioco: divertimento, movimento e fondamentali.", "allenatore": "Da definire", "allenamenti": "Da definire", "contatto": "", "image_url": "https://images.unsplash.com/photo-1655555044588-912861846347?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200", "order": 3},
 ]
 
 DEFAULT_COURSES = [
